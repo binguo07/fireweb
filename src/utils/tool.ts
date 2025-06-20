@@ -235,9 +235,9 @@ export const myupgrade = function (status: number, result: number) {
   if (status == 1) {
     return name
   } else {
-    if ((result = 0)) {
+    if (result === 0) {
       return label
-    } else if ((result = 1)) {
+    } else if (result === 1) {
       return labeltwo
     } else {
       return labelthree
