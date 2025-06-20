@@ -24,7 +24,10 @@
         查看数据</el-button
       >
       <el-button type="text" class="showData" @click="manualAlarm">
-        <i style="font-size: 14px; color: white; margin-right: 6px" class="iconfont icon-gaojingxiaoxi"></i>
+        <i
+          style="font-size: 14px; color: white; margin-right: 6px"
+          class="iconfont icon-gaojingxiaoxi"
+        ></i>
         手动报警
       </el-button>
     </div>
@@ -34,16 +37,27 @@
         <div class="center_div" id="center_div" @click="center_btn()">
           <div class="cesium-container" id="cesiumContainer" />
           <div class="cesium-toolbar">
-            <el-button type="primary" class="toolbar-button" @click="resetCameraView" title="初始视图">
+            <el-button
+              type="primary"
+              class="toolbar-button"
+              @click="resetCameraView"
+              title="初始视图"
+            >
               初始视角
             </el-button>
             <div class="toolbar-switch">
               <span>影像</span>
-              <el-switch v-model="imageryLayerVisible" @change="toggleImageryLayer" />
+              <el-switch
+                v-model="imageryLayerVisible"
+                @change="toggleImageryLayer"
+              />
             </div>
             <div class="toolbar-switch">
               <span>地形</span>
-              <el-switch v-model="elevationLayerVisible" @change="toggleElevationLayer" />
+              <el-switch
+                v-model="elevationLayerVisible"
+                @change="toggleElevationLayer"
+              />
             </div>
           </div>
           <div class="brand-logo">
@@ -51,50 +65,54 @@
           </div>
           <div id="cesium-info-container">
             <div
-                class="cesium-entity-tooltip"
-                v-if="hoveredDevice"
-                :style="{
+              class="cesium-entity-tooltip"
+              v-if="hoveredDevice"
+              :style="{
                 left: hoveredPosition.x + 'px',
                 top: hoveredPosition.y + 'px',
-                display: hoveredDevice ? 'block' : 'none'
+                display: hoveredDevice ? 'block' : 'none',
               }"
             >
               <div
-                  v-if="hoveredDevice.device_status === 0"
-                  class="tooltip-content normal-tooltip"
+                v-if="hoveredDevice.device_status === 0"
+                class="tooltip-content normal-tooltip"
               >
-                <div class="title">{{ hoveredDevice.device_name || hoveredDevice.title }}</div>
+                <div class="title">
+                  {{ hoveredDevice.device_name || hoveredDevice.title }}
+                </div>
                 <div
-                    v-if="hoveredDevice.sampleData.length > 0"
-                    class="frame_normal_box"
-                    :key="index"
-                    v-for="(sample, index) in hoveredDevice.sampleData"
+                  v-if="hoveredDevice.sampleData.length > 0"
+                  class="frame_normal_box"
+                  :key="index"
+                  v-for="(sample, index) in hoveredDevice.sampleData"
                 >
                   <p>
-                    <span v-if="sample.sample_name">{{ sample.sample_name }}:</span>
-                    <span>{{ sample.value }} {{ sample.sample_extra_info || '' }}</span>
+                    <span v-if="sample.sample_name"
+                      >{{ sample.sample_name }}:</span
+                    >
+                    <span
+                      >{{ sample.value }}
+                      {{ sample.sample_extra_info || "" }}</span
+                    >
                   </p>
                 </div>
               </div>
 
               <div
-                  v-else-if="hoveredDevice.device_status > 0"
-                  class="tooltip-content error-tooltip"
+                v-else-if="hoveredDevice.device_status > 0"
+                class="tooltip-content error-tooltip"
               >
                 <div class="frame_normal_box">
                   <p>
-                    <span>{{ hoveredDevice.error_des || '设备异常' }}</span>
+                    <span>{{ hoveredDevice.error_des || "设备异常" }}</span>
                   </p>
                 </div>
               </div>
 
-              <div
-                  v-else
-                  class="tooltip-content offline-tooltip"
-              >
+              <div v-else class="tooltip-content offline-tooltip">
                 <div class="frame_normal_box">
                   <p>
-                    <span>{{ hoveredDevice.error_des || '设备离线' }}</span>
+                    <span>{{ hoveredDevice.error_des || "设备离线" }}</span>
                   </p>
                 </div>
               </div>
@@ -121,7 +139,10 @@
               v-if="footerListnew.length > 0"
               ref="cardShow"
             >
-              <el-carousel-item v-for="(item, index) in footerListnew" :key="index">
+              <el-carousel-item
+                v-for="(item, index) in footerListnew"
+                :key="index"
+              >
                 <div class="checkTypeItem_centent">
                   <div
                     class="checkTypeItem"
@@ -142,7 +163,10 @@
               </el-carousel-item>
             </el-carousel>
             <div class="rightArrow" v-if="footerListnew.length > 6">
-              <img src="@/assets/image/public/next.png" @click="arrowClick('right')" />
+              <img
+                src="@/assets/image/public/next.png"
+                @click="arrowClick('right')"
+              />
             </div>
           </div>
         </div>
@@ -160,7 +184,9 @@
           >
             <div class="shexiangtou">
               <div class="shexiangtou-header">
-                <p>{{ cameradata.device_location }}{{ cameradata.device_name }}</p>
+                <p>
+                  {{ cameradata.device_location }}{{ cameradata.device_name }}
+                </p>
                 <i class="iconfont icon-quanping" @click="fullScreen"></i>
               </div>
               <div class="video_div">
@@ -208,7 +234,10 @@
                         <img src="@/assets/image/index/offlineimg.png" alt="" />
                         <p>告警</p>
                       </div>
-                      <i style="left: 22%; top: 20px" class="borderStyle borderTop"></i>
+                      <i
+                        style="left: 22%; top: 20px"
+                        class="borderStyle borderTop"
+                      ></i>
                       <i
                         class="borderStyle borderBottom"
                         style="left: 22%; top: 40px"
@@ -231,7 +260,10 @@
                       element-loading-background="rgba(0, 0, 0, 0)"
                       style="height: 50px"
                     />
-                    <div v-if="offlineList.length === 0 && !alarmload" class="noData">
+                    <div
+                      v-if="offlineList.length === 0 && !alarmload"
+                      class="noData"
+                    >
                       <span>暂无数据</span>
                     </div>
                   </div>
@@ -273,20 +305,20 @@
 
     <!-- 手动报警弹框 -->
     <el-dialog
-        title="手动报警确认"
-        v-model="manualAlarmDialogVisible"
-        :fullscreen="true"
-        style="height: 220px !important;"
+      title="手动报警确认"
+      v-model="manualAlarmDialogVisible"
+      :fullscreen="true"
+      style="height: 220px !important"
     >
-      <div style="display: flex;justify-content: center;">
-        <div style="width: 81%; margin-top: 20px;">
+      <div style="display: flex; justify-content: center">
+        <div style="width: 81%; margin-top: 20px">
           <el-input
-              type="password"
-              v-model="confirmPassword"
-              :clearable="true"
-              maxlength="20"
-              placeholder="请输入登录密码"
-              show-password
+            type="password"
+            v-model="confirmPassword"
+            :clearable="true"
+            maxlength="20"
+            placeholder="请输入登录密码"
+            show-password
           ></el-input>
         </div>
       </div>
@@ -295,7 +327,6 @@
         <span @click="confirmManualAlarm(2)">确定</span>
       </div>
     </el-dialog>
-
   </div>
   <!-- 查看数据 -->
   <ViewData
@@ -330,7 +361,12 @@ import BackTask from "@/components/backTask.vue";
 import { useStore } from "vuex";
 import { Router, useRouter } from "vue-router";
 import videoPlayer from "@/components/video.vue";
-import { PROJECTID, TUNNELID, DIVCIE_TYPE_FK, PROJECTNAME } from "@/utils/enumeration";
+import {
+  PROJECTID,
+  TUNNELID,
+  DIVCIE_TYPE_FK,
+  PROJECTNAME,
+} from "@/utils/enumeration";
 import { LoginFun } from "@/api/home";
 import { ENCRYPT } from "@/utils/encryption";
 
@@ -357,7 +393,7 @@ const relieveList = ref({});
 const valueDesc: Ref<string> = ref(""); //告警内容
 const footerList = ref([]); //底部数据
 let videoUrl: Ref<string> = ref(
-  "ws://47.108.254.101:16661/rtp/44010200491320000001_44010200491320000001.live.flv"
+  "ws://47.108.254.101:16661/rtp/44010200491320000001_44010200491320000001.live.flv",
 ); //直播流数据
 const renderComponent = ref(true);
 // const videoPl = ref(Date.now);
@@ -557,7 +593,7 @@ const innitCameraData = () => {
   console.log(
     window.Jessibuca,
     " ---window.Jessibuca",
-    document.getElementById("videoEle")
+    document.getElementById("videoEle"),
   );
   if (window.Jessibuca) {
     Jessibuca.value = new window.Jessibuca({
@@ -596,14 +632,16 @@ const initCesium = async () => {
   try {
     const Cesium = window.Cesium;
     if (!Cesium) {
-      console.error('Cesium is not loaded. Please make sure to include Cesium.js in your project.');
+      console.error(
+        "Cesium is not loaded. Please make sure to include Cesium.js in your project.",
+      );
       return;
     }
-    const viewer = new Cesium.Viewer('cesiumContainer', {
+    const viewer = new Cesium.Viewer("cesiumContainer", {
       baseLayer: new Cesium.ImageryLayer(
-          new Cesium.SingleTileImageryProvider({
-            url: require("@/assets/image/cesiumViewer/GlobalBkLayer.jpg"),
-          }),
+        new Cesium.SingleTileImageryProvider({
+          url: require("@/assets/image/cesiumViewer/GlobalBkLayer.jpg"),
+        }),
       ),
       animation: false,
       baseLayerPicker: false,
@@ -615,19 +653,27 @@ const initCesium = async () => {
       timeline: false,
       infoBox: false,
       selectionIndicator: false,
-      creditContainer: document.createElement('div'),
+      creditContainer: document.createElement("div"),
     });
 
     viewer.screenSpaceEventHandler.setInputAction((movement) => {
       const clickPosition = movement.position;
-      const cartesian = viewer.scene.globe.pick(viewer.camera.getPickRay(clickPosition), viewer.scene);
+      const cartesian = viewer.scene.globe.pick(
+        viewer.camera.getPickRay(clickPosition),
+        viewer.scene,
+      );
       const pickedObject = viewer.scene.pick(movement.position);
-      if (Cesium.defined(pickedObject) && Cesium.defined(pickedObject.id) &&
-          Cesium.defined(pickedObject.id.properties) &&
-          Cesium.defined(pickedObject.id.properties.deviceData)) {
+      if (
+        Cesium.defined(pickedObject) &&
+        Cesium.defined(pickedObject.id) &&
+        Cesium.defined(pickedObject.id.properties) &&
+        Cesium.defined(pickedObject.id.properties.deviceData)
+      ) {
         const deviceData = pickedObject.id.properties.deviceData.getValue();
-        console.log('Device clicked:', deviceData);
-        const equipment = equipmentList.value.find(item => item.id === deviceData.id);
+        console.log("Device clicked:", deviceData);
+        const equipment = equipmentList.value.find(
+          (item) => item.id === deviceData.id,
+        );
         if (equipment) {
           showDetile(equipment);
         }
@@ -637,7 +683,11 @@ const initCesium = async () => {
         const lon = Cesium.Math.toDegrees(cartographic.longitude);
         const lat = Cesium.Math.toDegrees(cartographic.latitude);
         const height = cartographic.height;
-        console.log('Clicked Position:', { longitude: lon, latitude: lat, height: height });
+        console.log("Clicked Position:", {
+          longitude: lon,
+          latitude: lat,
+          height: height,
+        });
       }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
@@ -649,27 +699,35 @@ const initCesium = async () => {
       };
     }
 
-    viewer.screenSpaceEventHandler.setInputAction(debounce((movement) => {
-      const pickedObject = viewer.scene.pick(movement.endPosition);
-      if (Cesium.defined(pickedObject) && Cesium.defined(pickedObject.id) &&
+    viewer.screenSpaceEventHandler.setInputAction(
+      debounce((movement) => {
+        const pickedObject = viewer.scene.pick(movement.endPosition);
+        if (
+          Cesium.defined(pickedObject) &&
+          Cesium.defined(pickedObject.id) &&
           Cesium.defined(pickedObject.id.properties) &&
-          Cesium.defined(pickedObject.id.properties.deviceData)) {
-        const deviceData = pickedObject.id.properties.deviceData.getValue();
-        const equipment = equipmentList.value.find(item => item.id === deviceData.id);
-        if (equipment) {
-          hoveredDevice.value = equipment;
-          hoveredPosition.value = {
-            x: movement.endPosition.x + 20,
-            y: movement.endPosition.y - 100
-          };
+          Cesium.defined(pickedObject.id.properties.deviceData)
+        ) {
+          const deviceData = pickedObject.id.properties.deviceData.getValue();
+          const equipment = equipmentList.value.find(
+            (item) => item.id === deviceData.id,
+          );
+          if (equipment) {
+            hoveredDevice.value = equipment;
+            hoveredPosition.value = {
+              x: movement.endPosition.x + 20,
+              y: movement.endPosition.y - 100,
+            };
+          }
+        } else {
+          hoveredDevice.value = null;
         }
-      } else {
-        hoveredDevice.value = null;
-      }
-    }, 200), Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+      }, 200),
+      Cesium.ScreenSpaceEventType.MOUSE_MOVE,
+    );
 
     viewer.camera.moveEnd.addEventListener(() => {
-      console.log('Current Camera:', {
+      console.log("Current Camera:", {
         heading: Cesium.Math.toDegrees(viewer.camera.heading),
         pitch: Cesium.Math.toDegrees(viewer.camera.pitch),
         roll: Cesium.Math.toDegrees(viewer.camera.roll),
@@ -682,24 +740,42 @@ const initCesium = async () => {
     // elevationLayer.value = addTiandituElevation(viewer);
     viewerRef.value = viewer;
     //
-    console.log('影像图层配置:', window.imageryConfig);
-    viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider(window.imageryConfig));
+    console.log("影像图层配置:", window.imageryConfig);
+    viewer.imageryLayers.addImageryProvider(
+      new Cesium.WebMapTileServiceImageryProvider(window.imageryConfig),
+    );
     //
     const tileset = await Cesium.Cesium3DTileset.fromUrl(
-        'https://bp-healthy.bimscodi.cn:8496/3dtiles/Scene/Production_2.json',
-        {
-          maximumScreenSpaceError: 1,
-        },
+      "https://bp-healthy.bimscodi.cn:8496/3dtiles/Scene/Production_2.json",
+      {
+        maximumScreenSpaceError: 1,
+      },
     );
     // 3d tiles 地形下降到海拔0
-    const cartographic = Cesium.Cartographic.fromCartesian(tileset.boundingSphere.center);
-    const surface = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, 0.0);
-    const offset = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, -290.0);
-    const translation = Cesium.Cartesian3.subtract(offset, surface, new Cesium.Cartesian3());
+    const cartographic = Cesium.Cartographic.fromCartesian(
+      tileset.boundingSphere.center,
+    );
+    const surface = Cesium.Cartesian3.fromRadians(
+      cartographic.longitude,
+      cartographic.latitude,
+      0.0,
+    );
+    const offset = Cesium.Cartesian3.fromRadians(
+      cartographic.longitude,
+      cartographic.latitude,
+      -290.0,
+    );
+    const translation = Cesium.Cartesian3.subtract(
+      offset,
+      surface,
+      new Cesium.Cartesian3(),
+    );
     tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
     //
     viewer.scene.primitives.add(tileset);
-    const boundingRectangle = Cesium.Rectangle.fromBoundingSphere(tileset.boundingSphere);
+    const boundingRectangle = Cesium.Rectangle.fromBoundingSphere(
+      tileset.boundingSphere,
+    );
     const goHome = () => {
       const lonDegrees = 105.46666049294342;
       const latDegrees = 28.149706520462665;
@@ -708,7 +784,11 @@ const initCesium = async () => {
       const pitch = -27.32307373725542;
       const roll = 0;
       viewer.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(lonDegrees, latDegrees, height),
+        destination: Cesium.Cartesian3.fromDegrees(
+          lonDegrees,
+          latDegrees,
+          height,
+        ),
         orientation: {
           heading: Cesium.Math.toRadians(heading),
           pitch: Cesium.Math.toRadians(pitch),
@@ -721,9 +801,9 @@ const initCesium = async () => {
     goHomeRef.value = goHome;
     renderDeviceLocations();
   } catch (error) {
-    console.error('Error initializing Cesium:', error);
+    console.error("Error initializing Cesium:", error);
   }
-}
+};
 
 const renderDeviceLocations = (device_clazz_fk = -1) => {
   if (!viewerRef.value || deviceLocations.value.length === 0) return;
@@ -733,8 +813,9 @@ const renderDeviceLocations = (device_clazz_fk = -1) => {
 
   viewer.entities.removeAll();
 
-  deviceLocations.value.forEach(device => {
-    const deviceInfo = equipmentList.value.find(item => item.id === device.id) || {};
+  deviceLocations.value.forEach((device) => {
+    const deviceInfo =
+      equipmentList.value.find((item) => item.id === device.id) || {};
 
     if (device_clazz_fk > 0) {
       if (deviceInfo.device_clazz_fk !== device_clazz_fk) {
@@ -753,18 +834,22 @@ const renderDeviceLocations = (device_clazz_fk = -1) => {
 
     const entity = viewer.entities.add({
       name: device.title,
-      position: Cesium.Cartesian3.fromDegrees(device.lon, device.lat - 0.00001, device.alt - 353),
+      position: Cesium.Cartesian3.fromDegrees(
+        device.lon,
+        device.lat - 0.00001,
+        device.alt - 353,
+      ),
       billboard: {
         image: statusImageUrl,
-        width: 52 * .6,
-        height: 89 * .6,
+        width: 52 * 0.6,
+        height: 89 * 0.6,
         disableDepthTestDistance: 500,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
         heightReference: Cesium.HeightReference.NONE,
       },
       label: {
         text: device.title,
-        font: '14px sans-serif',
+        font: "14px sans-serif",
         fillColor: Cesium.Color.WHITE,
         style: Cesium.LabelStyle.FILL_AND_OUTLINE,
         outlineWidth: 2,
@@ -772,16 +857,20 @@ const renderDeviceLocations = (device_clazz_fk = -1) => {
         pixelOffset: new Cesium.Cartesian2(0, -60),
         heightReference: Cesium.HeightReference.NONE,
         disableDepthTestDistance: 500,
-        distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200)
+        distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200),
       },
       properties: {
-        deviceData: device
-      }
+        deviceData: device,
+      },
     });
 
     viewer.entities.add({
       name: `${device.title}-logo`,
-      position: Cesium.Cartesian3.fromDegrees(device.lon, device.lat - 0.00001, device.alt - 353),
+      position: Cesium.Cartesian3.fromDegrees(
+        device.lon,
+        device.lat - 0.00001,
+        device.alt - 353,
+      ),
       billboard: {
         image: require("@/assets/image/index/sensor.png"),
         width: 20,
@@ -792,8 +881,8 @@ const renderDeviceLocations = (device_clazz_fk = -1) => {
         heightReference: Cesium.HeightReference.NONE,
       },
       properties: {
-        deviceData: device
-      }
+        deviceData: device,
+      },
     });
   });
 };
@@ -880,7 +969,7 @@ const GetAueryDeviceTitleFn = () => {
         if (device.device_coordinate) {
           try {
             const coordinates = JSON.parse(device.device_coordinate);
-            if (coordinates && typeof coordinates === 'object') {
+            if (coordinates && typeof coordinates === "object") {
               const lon = coordinates.lon || 0;
               const lat = coordinates.lat || 0;
               const alt = coordinates.alt || coordinates.height || 0;
@@ -889,11 +978,13 @@ const GetAueryDeviceTitleFn = () => {
                 lon: lon,
                 lat: lat,
                 alt: alt,
-                title: device.device_name || `Device ${device.id}`
+                title: device.device_name || `Device ${device.id}`,
               });
             }
           } catch (error) {
-            console.warn(`Invalid coordinate JSON for device ${device.id || 'unknown'}: ${device.device_coordinate}`);
+            console.warn(
+              `Invalid coordinate JSON for device ${device.id || "unknown"}: ${device.device_coordinate}`,
+            );
           }
         }
       }
@@ -918,8 +1009,7 @@ const GetAueryDeviceTitleFn = () => {
   });
 };
 //K144隧道视频信息获取
-const GetCameraFLVFn = () => {
-};
+const GetCameraFLVFn = () => {};
 
 //对页面显示的处理
 function footerListFn() {
@@ -1120,37 +1210,39 @@ const confirmManualAlarm = (val) => {
       userPass: ENCRYPT(confirmPassword.value),
     };
     confirmPassword.value = "";
-    LoginFun(loginData).then((res) => {
-      if (res.status === 0) {
-        // 密码正确，提交手动报警
-        submitManualAlarm();
-        manualAlarmDialogVisible.value = false;
+    LoginFun(loginData)
+      .then((res) => {
+        if (res.status === 0) {
+          // 密码正确，提交手动报警
+          submitManualAlarm();
+          manualAlarmDialogVisible.value = false;
+          ElMessage({
+            message: "手动报警成功",
+            type: "success",
+          });
+        } else {
+          // 密码错误
+          ElMessage({
+            message: "密码验证失败，请重新输入",
+            type: "error",
+          });
+        }
+      })
+      .catch((error) => {
         ElMessage({
-          message: "手动报警成功",
-          type: "success",
-        });
-      } else {
-        // 密码错误
-        ElMessage({
-          message: "密码验证失败，请重新输入",
+          message: "验证过程中出现错误，请重试",
           type: "error",
         });
-      }
-    }).catch(error => {
-      ElMessage({
-        message: "验证过程中出现错误，请重试",
-        type: "error",
+        console.error(error);
       });
-      console.error(error);
-    });
   }
 };
 
 const submitManualAlarm = () => {
   callManualAlarm({
-    alarmType: 'red',
+    alarmType: "red",
   });
-}
+};
 </script>
 
 <style scoped lang="less">
@@ -1313,11 +1405,19 @@ const submitManualAlarm = () => {
         }
         .borderTop {
           top: -6px;
-          background: linear-gradient(0deg, #0095ff 0%, rgba(0, 149, 255, 0) 100%);
+          background: linear-gradient(
+            0deg,
+            #0095ff 0%,
+            rgba(0, 149, 255, 0) 100%
+          );
         }
         .borderBottom {
           top: 18px;
-          background: linear-gradient(180deg, #0095ff 0%, rgba(0, 149, 255, 0) 100%);
+          background: linear-gradient(
+            180deg,
+            #0095ff 0%,
+            rgba(0, 149, 255, 0) 100%
+          );
         }
         .offlineClass {
           user-select: none;
@@ -1602,7 +1702,8 @@ const submitManualAlarm = () => {
   }
 }
 
-.error-tooltip, .offline-tooltip {
+.error-tooltip,
+.offline-tooltip {
   background-image: url("../../../assets/image/public/error_bubblebox.png");
   background-size: 100% 100%;
   padding: 10px 0;
