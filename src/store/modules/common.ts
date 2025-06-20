@@ -11,7 +11,8 @@ interface funcValue {
   name: String | any
   value: Object
 }
-interface userInfos {
+// 当前登录用户信息
+interface UserInfo {
   userName: String
   userId: String | Number
 }
@@ -27,7 +28,7 @@ const state = {
   canvasList:[]
 }
 const getters = {
-  getUserInfo: (state: any) => state.userInfos,
+  getUserInfo: (state: any) => state.userInfo,
   // 获取设备详细信息
   getDeviceInfos: (state: any) => state.deviceInfos,
   // 获取打开设备弹窗状态
