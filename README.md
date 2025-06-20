@@ -7,3 +7,7 @@
  * @LastEditTime: 2022-07-04 11:24:06
 -->
 #vue3+TS版本的成德南相关代码# fireweb
+
+## Running tests
+
+Use `npm test` to run the unit test suite.
