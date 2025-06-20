@@ -176,7 +176,7 @@ body {
     }
   }
   :deep(.el-form-item) {
-    border: 1px solid C7C7C8;
+    border: 1px solid #C7C7C8;
     background: #c7c7c8;
     border-radius: 5px;
     color: #454545;
