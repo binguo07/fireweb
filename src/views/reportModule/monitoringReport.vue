@@ -781,13 +781,13 @@ const isSplit = (nodes, index, pageHeight) => {
   }
   return false;
 };
-const get_H = (pageHeight, i, lableListID) => {
+const get_H = (pageHeight, i, labelListID) => {
   let height = 0;
   for (var j = i; j >= 0; j--) {
-    height = height + lableListID[j].offsetTop + lableListID[j].offsetHeight;
+    height = height + labelListID[j].offsetTop + labelListID[j].offsetHeight;
     if (height > pageHeight) {
       height =
-        height - (lableListID[j].offsetTop + lableListID[j].offsetHeight);
+        height - (labelListID[j].offsetTop + labelListID[j].offsetHeight);
       return pageHeight - height + 150;
     }
   }
@@ -914,24 +914,24 @@ const print = () => {
 //   let pageHeight = (domElement.scrollWidth / A4_WIDTH) * A4_HEIGHT;
 
 //   // let pageHeight = 800;
-//   let lableListID = domElement.querySelectorAll("p");
+//   let labelListID = domElement.querySelectorAll("p");
 //   // 进行分割操作，当dom内容已超出a4的高度，则将该dom前插入一个空dom，把他挤下去，分割
-//   for (let i = 0; i < lableListID.length; i++) {
+//   for (let i = 0; i < labelListID.length; i++) {
 //     let multiple = Math.ceil(
-//       (lableListID[i].offsetTop + lableListID[i].offsetHeight) / pageHeight
+//       (labelListID[i].offsetTop + labelListID[i].offsetHeight) / pageHeight
 //     );
-//     if (isSplit(lableListID, i, multiple * pageHeight)) {
-//       let divParent = lableListID[i].parentNode; // 获取该div的父节点
+//     if (isSplit(labelListID, i, multiple * pageHeight)) {
+//       let divParent = labelListID[i].parentNode; // 获取该div的父节点
 //       let newNode = document.createElement("div");
 //       newNode.className = "emptyDiv";
 //       newNode.style.background = "#ffffff";
-//       let _H = get_H(A4_HEIGHT, i, lableListID);
+//       let _H = get_H(A4_HEIGHT, i, labelListID);
 //       // multiple * pageHeight -
-//       // (lableListID[i].offsetTop + lableListID[i].offsetHeight);
+//       // (labelListID[i].offsetTop + labelListID[i].offsetHeight);
 //       //留白
 //       newNode.style.height = _H + "px";
 //       newNode.style.width = "100%";
-//       let next = lableListID[i].nextSibling; // 获取div的下一个兄弟节点
+//       let next = labelListID[i].nextSibling; // 获取div的下一个兄弟节点
 //       // 判断兄弟节点是否存在
 //       if (next) {
 //         // 存在则将新节点插入到div的下一个兄弟节点之前，即div之后
